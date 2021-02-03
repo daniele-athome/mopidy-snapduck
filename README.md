@@ -5,7 +5,7 @@ Mopidy extension that controls its own instance of the [Snapcast client](https:/
 
 In a [multi-room, multi-Mopidy configuration](https://www.home-assistant.io/blog/2016/02/18/multi-room-audio-with-snapcast/)
 the sound card of a room speaker is either owned by Snapcast client or by the local Mopidy instance. This extension will
-start `snapclient` when Mopidy is stopped and stops it when Mopidy is playing.
+start `snapclient` when Mopidy is stopped and stop it when Mopidy is playing.
 
 ## Installation
 
