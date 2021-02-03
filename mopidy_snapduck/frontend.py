@@ -14,8 +14,8 @@ logger = logging.getLogger(__name__)
 class SnapduckFrontend(pykka.ThreadingActor, CoreListener):
     def __init__(self, config, core):
         super().__init__()
-        self.snapcast_path = config['snapclient_path']
-        self.snapcast_args = config['snapclient_args']
+        self.snapcast_path = config['snapduck']['snapclient_path']
+        self.snapcast_args = config['snapduck']['snapclient_args']
         self.core = core
 
     def on_start(self):

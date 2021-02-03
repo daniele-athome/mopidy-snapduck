@@ -18,8 +18,8 @@ class Extension(ext.Extension):
 
     def get_config_schema(self):
         schema = super().get_config_schema()
-        schema["snapclient_path"] = config.Path()
-        schema["snapclient_args"] = config.String()
+        schema["snapclient_path"] = config.Path(optional=True)
+        schema["snapclient_args"] = config.String(optional=True)
         return schema
 
     def setup(self, registry):
