@@ -28,11 +28,10 @@ class SnapduckFrontend(pykka.ThreadingActor, CoreListener):
 
     def start_snapclient(self):
         if not self.process:
-            logger.info("Starting snapclient")
+            logger.debug("Starting snapclient")
             self.process = subprocess.Popen(shlex.split(self.snapcast_path + ' --logsink=stdout ' + self.snapcast_args))
 
     def playback_state_changed(self, old_state, new_state):
-        logger.info("Old state: %r, New state: %r", old_state, new_state)
         if new_state == 'stopped':
             self.start_snapclient()
         else:
@@ -40,7 +39,7 @@ class SnapduckFrontend(pykka.ThreadingActor, CoreListener):
 
     def stop_snapclient(self):
         if self.process:
-            logger.info("Stopping snapclient")
+            logger.debug("Stopping snapclient")
             self.process.terminate()
             try:
                 self.process.wait(1)
