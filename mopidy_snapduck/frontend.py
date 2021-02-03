@@ -2,7 +2,8 @@ from __future__ import unicode_literals
 
 import logging
 
-import os.path
+import subprocess
+import shlex
 
 from mopidy.core import CoreListener
 
@@ -15,23 +16,34 @@ class SnapduckFrontend(pykka.ThreadingActor, CoreListener):
     def __init__(self, config, core):
         super().__init__()
         self.snapcast_path = config['snapduck']['snapclient_path']
-        self.snapcast_args = config['snapduck']['snapclient_args']
+        self.snapcast_args = config['snapduck']['snapclient_args'] or ''
         self.core = core
+        self.process = None
 
     def on_start(self):
-        pass
+        self.start_snapclient()
 
     def on_stop(self):
-        pass
+        self.stop_snapclient()
 
-    def track_playback_paused(self, tl_track, time_position):
-        pass
+    def start_snapclient(self):
+        if not self.process:
+            logger.info("Starting snapclient")
+            self.process = subprocess.Popen(shlex.split(self.snapcast_path + ' --logsink=stdout ' + self.snapcast_args))
 
-    def track_playback_started(self, tl_track):
-        pass
+    def playback_state_changed(self, old_state, new_state):
+        logger.info("Old state: %r, New state: %r", old_state, new_state)
+        if new_state == 'stopped':
+            self.start_snapclient()
+        else:
+            self.stop_snapclient()
 
-    def track_playback_resumed(self, tl_track, time_position):
-        pass
-
-    def track_playback_ended(self, tl_track, time_position):
-        pass
+    def stop_snapclient(self):
+        if self.process:
+            logger.info("Stopping snapclient")
+            self.process.terminate()
+            try:
+                self.process.wait(1)
+            except subprocess.TimeoutExpired:
+                self.process.kill()
+            self.process = None
