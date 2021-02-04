@@ -15,8 +15,8 @@ logger = logging.getLogger(__name__)
 class SnapduckFrontend(pykka.ThreadingActor, CoreListener):
     def __init__(self, config, core):
         super().__init__()
-        self.snapcast_path = config['snapduck']['snapclient_path']
-        self.snapcast_args = config['snapduck']['snapclient_args'] or ''
+        self.snapcast_path = config["snapduck"]["snapclient_path"]
+        self.snapcast_args = config["snapduck"]["snapclient_args"] or ""
         self.core = core
         self.process = None
 
@@ -29,10 +29,10 @@ class SnapduckFrontend(pykka.ThreadingActor, CoreListener):
     def start_snapclient(self):
         if not self.process:
             logger.debug("Starting snapclient")
-            self.process = subprocess.Popen(shlex.split(self.snapcast_path + ' --logsink=stdout ' + self.snapcast_args))
+            self.process = subprocess.Popen(shlex.split(self.snapcast_path + " --logsink=stdout " + self.snapcast_args))
 
     def playback_state_changed(self, old_state, new_state):
-        if new_state == 'stopped':
+        if new_state == "stopped":
             self.start_snapclient()
         else:
             self.stop_snapclient()
