@@ -2,6 +2,7 @@ include *.py
 include *.md
 include LICENSE
 include MANIFEST.in
+include pyproject.toml
 include tox.ini
 
 include mopidy_*/ext.conf
