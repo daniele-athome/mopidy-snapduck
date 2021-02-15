@@ -3,7 +3,7 @@ Mopidy-Snapduck
 
 Mopidy extension that controls its own instance of the [Snapcast client](https://github.com/badaix/snapcast).
 
-In a [multi-room, multi-Mopidy configuration](https://www.home-assistant.io/blog/2016/02/18/multi-room-audio-with-snapcast/)
+In a [multi-room multi-Mopidy configuration](https://www.home-assistant.io/blog/2016/02/18/multi-room-audio-with-snapcast/)
 the sound card of a room speaker is either owned by Snapcast client or by the local Mopidy instance. This extension will
 start `snapclient` when Mopidy is stopped and stop it when Mopidy is playing.
 
@@ -17,7 +17,7 @@ sudo python3 -m pip Mopidy-Snapduck
 
 ## Configuration
 
-Before starting Mopidy, you must add configuration for Mopidy-Snapduck to your Mopidy configuration file::
+Before starting Mopidy, you must add configuration for Mopidy-Snapduck to your Mopidy configuration file:
 
 ```
 [snapduck]
